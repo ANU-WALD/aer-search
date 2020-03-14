@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  config:'assets/report_card_search.json',
+  google_maps_api_key: 'WENFO_GOOGLE_MAPS_API_KEY'
 };
 
 /*
