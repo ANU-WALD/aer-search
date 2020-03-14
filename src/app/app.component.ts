@@ -28,6 +28,11 @@ interface Location{
   lng:number;
 }
 
+interface Report {
+  label:string;
+  url:string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -43,7 +48,8 @@ export class AppComponent {
 
   location:Location = null;
   matchedAddress: string;
-  matchedReports:string[];
+  matchedReports:Report[];
+  selectedReport: Report;
 
   constructor(private _http: HttpClient, private geocoder:GeocoderService) {
     this._http.get(`${environment.config}?_t=${(new Date().getTime())}`).subscribe((data: LayerDescription[]) => {
@@ -99,7 +105,15 @@ export class AppComponent {
   }
 
   updateURL() {
+    this.selectedReport = {
+      label: `${this.selectedLayer.name}: ${this.selectedFeature[this.selectedLayer.labelField]}`,
+      url: this.makeURL(this.selectedLayer,this.selectedFeature)
+    }
+  }
 
+  makeURL(layer:LayerDescription,feature:SimpleFeature):string{
+    const base='http://wenfo.org/aer_pdf';
+    return `${base}/${layer.source}/${feature[layer.labelField]}.pdf`;
   }
 
   useLocation() {
@@ -128,7 +142,10 @@ export class AppComponent {
     this.layers.forEach(layer=>{
       const matchingFeatures = layer.features.filter(f=>this.featureContains(f,this.location));
       this.matchedReports = this.matchedReports.concat(matchingFeatures.map(f=>{
-        return `${layer.name}: ${f[layer.labelField]}`;
+        return {
+          label: `${layer.name}: ${f[layer.labelField]}`,
+          url: this.makeURL(layer,f)
+        };
       }));
     });
   }

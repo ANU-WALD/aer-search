@@ -4,35 +4,68 @@
   <li ngbNavItem>
     <a ngbNavLink>Scorecards for nearby locations</a>
     <ng-template ngbNavContent>
-      <input [(ngModel)]="address" (ngModelChange)="addressChange($event)">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <p>Enter address</p>
+          <input [(ngModel)]="address" (ngModelChange)="addressChange()">
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <p>or</p>
+          <button class="btn btn-primary"
+                  (click)="useLocation()">
+            Use my current location
+          </button>
+    </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <p><strong>Address: </strong>{{matchedAddress}}</p>
+          <p><strong>Report cards: </strong>{{matchedReports?.length}}</p>
 
-      <button (click)="useLocation()">Use my current location</button>
-
-      <p>{{matchedAddress}}</p>
-      <ul>
-        <li *ngFor="let report of matchedReports">{{report}}</li>
-      </ul>
+          <select class="form-control" [disabled]="!matchedReports?.length" [(ngModel)]="selectedReport">
+            <option *ngFor="let report of matchedReports" [ngValue]="report">
+              {{report.label}}
+            </option>
+          </select>
+        </div>
+      </div>
     </ng-template>
+
   </li>
   <li ngbNavItem>
     <a ngbNavLink>Lookup any scorecard</a>
     <ng-template ngbNavContent>
-      <div>
-        <select [(ngModel)]="selectedLayer" (ngModelChange)="layerChange($event)">
-          <option *ngFor="let layer of layers" [ngValue]="layer">{{layer.name}}</option>
-        </select>
-      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div>
+            <p>Choose region type</p>
+            <select class="form-control" [(ngModel)]="selectedLayer" (ngModelChange)="layerChange()">
+              <option *ngFor="let layer of layers" [ngValue]="layer">{{layer.name}}</option>
+            </select>
+          </div>
 
-      <div *ngIf="selectedLayer">
-        <select [(ngModel)]="selectedFeature" (ngModelChange)="featureChange($event)">
-          <option *ngFor="let feature of selectedLayer.features" [ngValue]="feature">
-            {{feature[selectedLayer.labelField]}}
-          </option>
-        </select>
-      </div>
+          <div *ngIf="selectedLayer">
 
-      {{selectedFeature|json}}
+            <p>Choose region</p>
+            <select class="form-control" [(ngModel)]="selectedFeature" (ngModelChange)="featureChange()">
+              <option *ngFor="let feature of selectedLayer.features" [ngValue]="feature">
+                {{feature[selectedLayer.labelField]}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
     </ng-template>
   </li>
 </ul>
 <div [ngbNavOutlet]="nav"></div>
+
+<div class="row">
+  <div class="col">
+    <a class="btn btn-primary"
+       ngClass.disabled="!selectedReport"
+       [href]="selectedReport?.url">
+      Get report
+    </a>
+  </div>
+</div>
