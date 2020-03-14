@@ -20,11 +20,11 @@ script:
 - SCRIPTS_FN=src/environments/environment.prod.ts
 - sed "s/WENFO_GOOGLE_MAPS_API_KEY/$GOOGLE_MAPS_API_KEY/g" < $SCRIPTS_FN > tmp
 - mv tmp $SCRIPTS_FN
-- env BRANCH=$TRAVIS_BRANCH npm run build
+- env BRANCH=$TRAVIS_BRANCH npm run build-prod
 deploy:
 - skip_cleanup: true
   provider: script
-  script: cd dist && scp -o StrictHostKeyChecking=no -i ../id_rsa_deploy -r . $FTP_USER@wenfo.org:/home/$FTP_USER/public_html/aer_search
+  script: cd dist/aer-search && scp -o StrictHostKeyChecking=no -i ../../id_rsa_deploy -r . $FTP_USER@wenfo.org:/home/$FTP_USER/public_html/aer_search
   on:
     branch: master
 notifications:
