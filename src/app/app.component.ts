@@ -59,10 +59,6 @@ export class AppComponent {
       this.selectedFeature = data[0].features[0];
       this.matchReports();
     });
-
-    this.geocoder.getCoordinates('5 Mockridge Crescent, Holt').subscribe(data=>{
-      console.log(data);
-    });
   }
 
   layerChange() {
