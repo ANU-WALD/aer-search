@@ -53,6 +53,10 @@ export class AppComponent {
   matchedReports:Report[];
   selectedReport: string | Report;
 
+  get url():string{
+    return this.selectedReport&&(this.selectedReport as any).url;
+  }
+
   constructor(private _http: HttpClient, private geocoder:GeocoderService) {
     const url = `${environment.config}?_t=${(new Date().getTime())}`;
     this.layers$ = this._http.get(url).pipe(
