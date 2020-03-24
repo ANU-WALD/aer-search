@@ -1,8 +1,27 @@
+
 <!--The content below is only a placeholder and can be replaced.-->
 
-<ul ngbNav #nav="ngbNav" class="nav-tabs">
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.label" [term]="t"></ngb-highlight>
+</ng-template>
+
+
+<ul ngbNav #nav="ngbNav" class="nav-tabs" (navChange)="onNavChange()">
   <li ngbNavItem>
-    <a ngbNavLink>Scorecards for nearby locations</a>
+    <a ngbNavLink>Find a report card</a>
+    <ng-template ngbNavContent>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <p>Find a report card</p>
+          <input [(ngModel)]="selectedReport" [ngbTypeahead]="search" [resultTemplate]="rt"
+          [inputFormatter]="reportFormatter" placeholder="eg. New South Wales">
+          <hr>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+  <li ngbNavItem>
+    <a ngbNavLink>Search for scorecards by location</a>
     <ng-template ngbNavContent>
       <div class="row">
         <div class="col-sm-12 col-md-6">
@@ -20,9 +39,9 @@
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <p><strong>Address: </strong>{{matchedAddress}}</p>
-          <p><strong>Report cards: </strong>{{matchedReports?.length}}</p>
+          <p *ngIf="matchedReports?.length"><strong>Found {{matchedReports?.length}} nearby report cards: </strong></p>
 
-          <select class="form-control" [disabled]="!matchedReports?.length" [(ngModel)]="selectedReport">
+          <select class="form-control" *ngIf="matchedReports?.length" [(ngModel)]="selectedReport">
             <option *ngFor="let report of matchedReports" [ngValue]="report">
               {{report.label}}
             </option>
@@ -32,6 +51,8 @@
     </ng-template>
 
   </li>
+<!--
+
   <li ngbNavItem>
     <a ngbNavLink>Lookup any scorecard</a>
     <ng-template ngbNavContent>
@@ -57,14 +78,16 @@
       </div>
     </ng-template>
   </li>
+-->
 </ul>
 <div [ngbNavOutlet]="nav"></div>
 
 <div class="row">
   <div class="col">
     <a class="btn btn-primary"
-       ngClass.disabled="!selectedReport"
-       [href]="selectedReport?.url">
+       [ngClass]="{disabled:!selectedReport||!selectedReport.url}"
+       [href]="selectedReport?.url"
+       target="blank">
       Get report
     </a>
   </div>
