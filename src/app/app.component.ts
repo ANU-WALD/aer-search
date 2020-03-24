@@ -97,7 +97,7 @@ export class AppComponent {
         this.geocodingSubscription = null;
       }
       console.log(this.address);
-      if(this.address&&(this.address.length>4)){
+      if(this.address&&(this.address.length>3)){
         this.geocodingSubscription = this.geocoder.getCoordinates(this.address).subscribe(res=>{
           console.log(res);
           this.geocodingSubscription = null;
