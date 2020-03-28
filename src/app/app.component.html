@@ -1,4 +1,3 @@
-
 <!--The content below is only a placeholder and can be replaced.-->
 
 <ng-template #rt let-r="result" let-t="term">
@@ -11,11 +10,10 @@
     <a ngbNavLink>Find a report card</a>
     <ng-template ngbNavContent>
       <div class="row">
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-4">
           <p>Find a report card</p>
-          <input [(ngModel)]="selectedReport" [ngbTypeahead]="search" [resultTemplate]="rt"
-          [inputFormatter]="reportFormatter" placeholder="eg. New South Wales">
-          <hr>
+          <input class="form-control" [(ngModel)]="selectedReport" [ngbTypeahead]="search" [resultTemplate]="rt"
+            [inputFormatter]="reportFormatter" placeholder="eg. New South Wales">
         </div>
       </div>
     </ng-template>
@@ -24,17 +22,16 @@
     <a ngbNavLink>Search for scorecards by location</a>
     <ng-template ngbNavContent>
       <div class="row">
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-4">
           <p>Enter address</p>
-          <input [(ngModel)]="address" (ngModelChange)="addressChange()">
+          <input class="form-control" [(ngModel)]="address" (ngModelChange)="addressChange()">
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-8">
           <p>or</p>
-          <button class="btn btn-primary"
-                  (click)="useLocation()">
+          <button class="btn btn-primary" (click)="useLocation()">
             Use my current location
           </button>
-    </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-12 col-md-6">
@@ -51,7 +48,7 @@
     </ng-template>
 
   </li>
-<!--
+  <!--
 
   <li ngbNavItem>
     <a ngbNavLink>Lookup any scorecard</a>
@@ -84,10 +81,8 @@
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-primary"
-       [ngClass]="{disabled:!url}"
-       [href]="url"
-       target="blank">
+    <div style="height:40px;"></div>
+    <a class="btn btn-primary" [ngClass]="{disabled:!url}" [href]="url" target="blank">
       Get report
     </a>
   </div>
