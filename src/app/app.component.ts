@@ -42,8 +42,8 @@ interface Report {
 export class AppComponent {
   layers$: Observable<LayerDescription[]>;
   layers: LayerDescription[] = [];
-  selectedLayer: LayerDescription;
-  selectedFeature: SimpleFeature;
+  // selectedLayer: LayerDescription;
+  // selectedFeature: SimpleFeature;
   address: string;
   geocodingSubscription: Subscription;
   debounce:number=null;
@@ -66,19 +66,19 @@ export class AppComponent {
 
     this.layers$.subscribe((data: LayerDescription[]) => {
       this.layers = data;
-      this.selectedLayer = data[0];
-      this.layerChange();
-      this.selectedFeature = data[0].features[0];
+      // this.selectedLayer = data[0];
+      // this.layerChange();
+      // this.selectedFeature = data[0].features[0];
       this.matchReports();
     });
   }
 
-  layerChange() {
-    const nmField = this.selectedLayer.labelField;
-    this.selectedLayer.features.sort((a, b) => a[nmField] < b[nmField] ? -1 : 1);
-    this.selectedFeature = this.selectedLayer.features[0];
-    this.updateURL();
-  }
+  // layerChange() {
+  //   const nmField = this.selectedLayer.labelField;
+  //   this.selectedLayer.features.sort((a, b) => a[nmField] < b[nmField] ? -1 : 1);
+  //   this.selectedFeature = this.selectedLayer.features[0];
+  //   this.updateURL();
+  // }
 
   // featureChange() {
   //   this.updateURL();
@@ -113,9 +113,9 @@ export class AppComponent {
     },DEBOUNCE_TIME);
   }
 
-  updateURL() {
-    this.selectedReport = this.makeReport(this.selectedLayer,this.selectedFeature);
-  }
+  // updateURL() {
+  //   this.selectedReport = this.makeReport(this.selectedLayer,this.selectedFeature);
+  // }
 
   makeURL(layer:LayerDescription,feature:SimpleFeature):string{
     const base='http://wenfo.org/aer_pdf';
@@ -204,7 +204,7 @@ export class AppComponent {
         if(term.length < 2){
           return of([]);
         }
-        let matches$ = this.matchReportsByName(term);
+        const matches$ = this.matchReportsByName(term);
         if(term.length < 4){
           return matches$;
         }
