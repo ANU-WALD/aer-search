@@ -118,7 +118,7 @@ export class AppComponent {
   // }
 
   makeURL(layer:LayerDescription,feature:SimpleFeature):string{
-    const base='http://wenfo.org/aer_pdf';
+    const base=environment.pdf_location;
     return `${base}/${layer.source}/${feature[layer.labelField]}.pdf`;
   }
 
