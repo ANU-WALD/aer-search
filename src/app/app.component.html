@@ -10,34 +10,26 @@
     <a ngbNavLink>Find a report card</a>
     <ng-template ngbNavContent>
       <div class="row">
-        <div class="col-sm-12 col-md-4">
-          <p>Find a report card</p>
+        <div class="col-sm-12 col-md-4 search-input">
+          <!-- <p>Find a report card</p> -->
           <input class="form-control" [(ngModel)]="selectedReport" [ngbTypeahead]="search" [resultTemplate]="rt"
             [inputFormatter]="reportFormatter" placeholder="eg. New South Wales">
         </div>
       </div>
     </ng-template>
   </li>
-  <li ngbNavItem>
+  <!-- <li ngbNavItem>
     <a ngbNavLink>Search for scorecards by location</a>
     <ng-template ngbNavContent>
       <div class="row">
-        <div class="col-sm-12 col-md-4">
-          <p>Enter address</p>
-          <input class="form-control" [(ngModel)]="address" (ngModelChange)="addressChange()">
+        <div class="col-sm-12 col-md-4 search-input">
+          <input class="form-control" [(ngModel)]="address" (ngModelChange)="addressChange()"
+                 placeholder="Enter address">
         </div>
-<!--
-        <div class="col-sm-12 col-md-8">
-          <p>or</p>
-          <button class="btn btn-primary" (click)="useLocation()">
-            Use my current location
-          </button>
-        </div>
--->
       </div>
       <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <p><strong>Address: </strong>{{matchedAddress}}</p>
+        <div *ngIf="matchedAddress" class="col-sm-12 col-md-6 search-input">
+          <p><strong>Address match: </strong>{{matchedAddress}}</p>
           <p *ngIf="matchedReports?.length"><strong>Found {{matchedReports?.length}} nearby report cards: </strong></p>
 
           <select class="form-control" *ngIf="matchedReports?.length" [(ngModel)]="selectedReport">
@@ -49,7 +41,7 @@
       </div>
     </ng-template>
 
-  </li>
+  </li> -->
 </ul>
 <div [ngbNavOutlet]="nav"></div>
 
