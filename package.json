@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 9006",
-    "build": "ng build",
-    "build-prod": "ng build --prod --base-href=/aer-search/",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; ng build",
+    "build-prod": "export NODE_OPTIONS=--openssl-legacy-provider; ng build --prod --base-href=/aer-search/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
